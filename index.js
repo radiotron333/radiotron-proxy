@@ -1,24 +1,18 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 8036; // Porta fissa per il proxy
 
-app.get('/', async (req, res) => {
-  try {
-    res.set('Access-Control-Allow-Origin', '*'); // <<< QUESTA RIGA ABILITA CORS
-    const response = await fetch('http://air.doscast.com:8036/currentsong?sid=1', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0'
-      }
-    });
-    const titolo = await response.text();
-    res.send(titolo);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Errore nel recupero del titolo');
-  }
+// Rotta principale del proxy
+app.get('/', (req, res) => {
+  res.send('Radiotron Proxy attivo sulla porta 8036');
 });
 
+// Rotta per gestire altre richieste (personalizzala)
+app.get('/stream', (req, res) => {
+  res.send('Dati dello stream radio');
+});
+
+// Avvia il server
 app.listen(PORT, () => {
-  console.log(`Proxy Radiotron avviato sulla porta ${PORT}`);
+  console.log(`Proxy in esecuzione su http://localhost:${PORT}`);
 });
