@@ -1,10 +1,13 @@
 import express from "express";
 import fetch from "node-fetch";
+import cors from "cors"; // ⬅️ IMPORTANTE
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Relaxound - sostituisci l'URL con quello reale
+app.use(cors()); // ⬅️ ABILITA CORS PER TUTTI I DOMINI
+
+// Dancenet
 app.get("/dancenet", async (req, res) => {
   try {
     const resp = await fetch("http://air.doscast.com:8036/currentsong?sid=1");
@@ -15,10 +18,10 @@ app.get("/dancenet", async (req, res) => {
   }
 });
 
-// Doscats
+// Relaxound
 app.get("/relaxound", async (req, res) => {
   try {
-    const resp = await fetch("http://air.doscast.com:8044/currentsong?sid=1");
+    const resp = await fetch("http://air.doscats.com:8044/currentsong?sid=1");
     const text = await resp.text();
     res.send(`${text}`);
   } catch (err) {
