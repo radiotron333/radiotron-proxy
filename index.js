@@ -11,7 +11,7 @@ app.get("/dancenet", async (req, res) => {
     const text = await resp.text();
     res.send(`${text}`);
   } catch (err) {
-    res.status(500).send("Errore Relaxound: " + err.message);
+    res.status(500).send("Errore Dancenet: " + err.message);
   }
 });
 
@@ -22,7 +22,7 @@ app.get("/relaxound", async (req, res) => {
     const text = await resp.text();
     res.send(`${text}`);
   } catch (err) {
-    res.status(500).send("Errore Doscats: " + err.message);
+    res.status(500).send("Errore Relaxound: " + err.message);
   }
 });
 
