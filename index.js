@@ -1,18 +1,31 @@
-const express = require('express');
+import express from "express";
+import fetch from "node-fetch";
+
 const app = express();
-const PORT = 8036; // Porta fissa per il proxy
+const PORT = process.env.PORT || 3000;
 
-// Rotta principale del proxy
-app.get('/', (req, res) => {
-  res.send('Radiotron Proxy attivo sulla porta 8036');
+// Relaxound - sostituisci l'URL con quello reale
+app.get("/relaxound", async (req, res) => {
+  try {
+    const resp = await fetch("http://air.doscast.com:8036/currentsong?sid=1");
+    const text = await resp.text();
+    res.send(`Relaxound: ${text}`);
+  } catch (err) {
+    res.status(500).send("Errore Relaxound: " + err.message);
+  }
 });
 
-// Rotta per gestire altre richieste (personalizzala)
-app.get('/stream', (req, res) => {
-  res.send('Dati dello stream radio');
+// Doscats
+app.get("/doscats", async (req, res) => {
+  try {
+    const resp = await fetch("http://air.doscats.com:8044/currentsong?sid=1");
+    const text = await resp.text();
+    res.send(`Doscats: ${text}`);
+  } catch (err) {
+    res.status(500).send("Errore Doscats: " + err.message);
+  }
 });
 
-// Avvia il server
 app.listen(PORT, () => {
-  console.log(`Proxy in esecuzione su http://localhost:${PORT}`);
+  console.log(`Server attivo sulla porta ${PORT}`);
 });
