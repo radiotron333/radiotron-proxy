@@ -21,7 +21,7 @@ app.get("/dancenet", async (req, res) => {
 // Relaxound
 app.get("/relaxound", async (req, res) => {
   try {
-    const resp = await fetch("http://air.doscats.com:8044/currentsong?sid=1");
+    const resp = await fetch("http://air.doscast.com:8044/currentsong?sid=1");
     const text = await resp.text();
     res.send(`${text}`);
   } catch (err) {
